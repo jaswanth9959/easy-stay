@@ -1,5 +1,5 @@
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import { FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import logo from "../assets/logo.png";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
@@ -37,11 +37,6 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <LinkContainer to="/cart">
-                <Nav.Link>
-                  <FaShoppingCart /> Cart
-                </Nav.Link>
-              </LinkContainer>
               {userInfo ? (
                 <>
                   <NavDropdown title={userInfo.name} id="username">

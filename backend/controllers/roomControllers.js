@@ -35,4 +35,42 @@ const updateRoomAvailability = asyncHandler(async (req, res) => {
   }
 });
 
-export { getRoomById, getRooms, updateRoomAvailability };
+const createRoomReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+
+  const room = await Room.findById(req.params.id);
+
+  if (room) {
+    const alreadyReviewed = room.reviews.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    );
+
+    if (alreadyReviewed) {
+      res.status(400);
+      throw new Error("Room already reviewed");
+    }
+
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user: req.user._id,
+    };
+
+    room.reviews.push(review);
+
+    room.numReviews = room.reviews.length;
+
+    room.rating =
+      room.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      room.reviews.length;
+
+    await room.save();
+    res.status(201).json({ message: "Review added" });
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
+
+export { getRoomById, getRooms, updateRoomAvailability, createRoomReview };

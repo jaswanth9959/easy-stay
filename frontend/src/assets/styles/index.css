@@ -95,3 +95,7 @@ table th {
   display: flex;
   flex-direction: column;
 }
+.btn-bg {
+  background-color: #7b8a8b !important;
+  border: none;
+}

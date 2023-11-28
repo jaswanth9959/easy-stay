@@ -50,6 +50,11 @@ const roomSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    counterAvailable: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     price: {
       type: Number,
       required: true,

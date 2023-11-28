@@ -22,6 +22,9 @@ import RoomDetailsScreen from "./screens/RoomDetailsScreen";
 import UserEditScreen from "./screens/admin/UserEditScreen";
 import UserListScreen from "./screens/admin/UserListScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import ConfirmScreen from "./screens/ConfirmScreen";
+import PaymentScreen from "./screens/PaymentScreen";
+import CompleteReservationScreen from "./screens/CompleteReservationScreen";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -30,8 +33,14 @@ const router = createBrowserRouter(
       <Route path="/rooms/:id" element={<RoomDetailsScreen />} />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
+      <Route path="/confirm" element={<ConfirmScreen />} />
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="/payment" element={<PaymentScreen />} />
+        <Route
+          path="/completeReservation"
+          element={<CompleteReservationScreen />}
+        />
       </Route>
       <Route path="" element={<AdminRoute />}>
         <Route path="/admin/userlist" element={<UserListScreen />} />

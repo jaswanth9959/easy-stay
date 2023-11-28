@@ -5,16 +5,6 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { Link } from "react-router-dom";
 const RoomsScreen = () => {
-  // const [rooms, setRooms] = useState([]);
-  // useEffect(() => {
-  //   const fetchRooms = async () => {
-  //     const { data } = await axios.get("/api/rooms");
-  //     setRooms(data);
-  //   };
-
-  //   fetchRooms();
-  // }, []);
-
   const { data: rooms, isLoading, error } = useGetRoomsQuery();
   return (
     <>
@@ -45,7 +35,7 @@ const RoomsScreen = () => {
                       <strong>{room.category.name}</strong>
                     </Card.Text>
                     <Link to={`/rooms/${room._id}`}>
-                      <Button type="button" bg="dark">
+                      <Button type="button" bg="dark" className="btn-bg">
                         Check Availability
                       </Button>
                     </Link>
