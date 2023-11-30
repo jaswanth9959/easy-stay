@@ -145,7 +145,7 @@ const RoomDetailsScreen = () => {
         <>
           <Row>
             <h5 className="text-center">
-              From:{fromDate} - To:{toDate}
+              From: {fromDate} - To: {toDate}
             </h5>
             <Col md={{ span: 6, offset: 1 }}>
               <Image src={room.image} alt={room.title} fluid />
@@ -155,6 +155,16 @@ const RoomDetailsScreen = () => {
                     value={room.rating}
                     text={`${room.numReviews} reviews`}
                   />
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>
+                      <h5>Check In Time: 12:00pm </h5>
+                    </Col>
+                    <Col>
+                      <h5>Check Out Time: 11:00am </h5>
+                    </Col>
+                  </Row>
                 </ListGroup.Item>
               </ListGroup>
             </Col>

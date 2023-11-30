@@ -43,8 +43,8 @@ const Header = () => {
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>Profile</NavDropdown.Item>
                     </LinkContainer>
-                    <LinkContainer to="/mybookings">
-                      <NavDropdown.Item>My Bookings</NavDropdown.Item>
+                    <LinkContainer to="/myreservations">
+                      <NavDropdown.Item>My Reservations</NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Item onClick={logoutHandler}>
                       Logout
@@ -68,7 +68,7 @@ const Header = () => {
                   <LinkContainer to="/admin/productlist">
                     <NavDropdown.Item>Manage Rooms</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to="/admin/orderlist">
+                  <LinkContainer to="/admin/reservations">
                     <NavDropdown.Item>Manage Reservationss</NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to="/admin/userlist">

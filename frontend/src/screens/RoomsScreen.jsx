@@ -5,7 +5,9 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { Link } from "react-router-dom";
 const RoomsScreen = () => {
-  const { data: rooms, isLoading, error } = useGetRoomsQuery();
+  const { data, isLoading, error } = useGetRoomsQuery();
+
+  const rooms = data?.filter((room) => !room.counterAvailable);
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
@@ -19,12 +21,17 @@ const RoomsScreen = () => {
         </Message>
       ) : (
         <>
-          <h2>Room Types</h2>
-          {rooms.map((room) => (
-            <Row className="mt-3" key={room._id}>
-              <Col md={{ span: 8, offset: 2 }}>
+          <h2>Select Room Type</h2>
+          <Row className="mt-3">
+            {rooms.map((room) => (
+              <Col
+                md={{ span: 4, offset: 1 }}
+                sm={12}
+                key={room._id}
+                className="my-3"
+              >
                 <Card>
-                  <Card.Img src={room.image} variant="top" height={350} />
+                  <Card.Img src={room.image} variant="top" height={250} />
 
                   <Card.Body className="text-center">
                     <Card.Title as="div">
@@ -42,8 +49,8 @@ const RoomsScreen = () => {
                   </Card.Body>
                 </Card>
               </Col>
-            </Row>
-          ))}
+            ))}
+          </Row>
         </>
       )}
     </>

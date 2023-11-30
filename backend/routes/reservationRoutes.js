@@ -1,7 +1,27 @@
 import express from "express";
 const router = express.Router();
-import { addReservationItems } from "../controllers/reservationControllers.js";
+import {
+  addReservationItems,
+  getReservationById,
+  getMyReservations,
+  getReservations,
+  updateReservationToPaid,
+  updateReservationToCheckedIn,
+  updateReservationToCheckedOut,
+} from "../controllers/reservationControllers.js";
 
-import { protect } from "../middleware/authMiddleware.js";
-router.route("/").post(protect, addReservationItems);
+import { protect, admin } from "../middleware/authMiddleware.js";
+router
+  .route("/")
+  .post(protect, addReservationItems)
+  .get(protect, admin, getReservations);
+router.route("/mine").get(protect, getMyReservations);
+router.route("/:id/pay").put(protect, updateReservationToPaid);
+router.route("/:id").get(protect, getReservationById);
+router
+  .route("/:id/checkedIn")
+  .put(protect, admin, updateReservationToCheckedIn);
+router
+  .route("/:id/checkedOut")
+  .put(protect, admin, updateReservationToCheckedOut);
 export default router;

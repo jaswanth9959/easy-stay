@@ -25,6 +25,11 @@ import ProfileScreen from "./screens/ProfileScreen";
 import ConfirmScreen from "./screens/ConfirmScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import CompleteReservationScreen from "./screens/CompleteReservationScreen";
+import ReservationScreen from "./screens/ReservationScreen";
+import MyReservationsScreen from "./screens/MyReservationsScreen";
+import ReservationListScreen from "./screens/admin/ReservationListScreen";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -41,10 +46,13 @@ const router = createBrowserRouter(
           path="/completeReservation"
           element={<CompleteReservationScreen />}
         />
+        <Route path="/reservation/:id" element={<ReservationScreen />} />
+        <Route path="/myreservations" element={<MyReservationsScreen />} />
       </Route>
       <Route path="" element={<AdminRoute />}>
         <Route path="/admin/userlist" element={<UserListScreen />} />
         <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
+        <Route path="/admin/reservations" element={<ReservationListScreen />} />
       </Route>
     </Route>
   )
@@ -54,7 +62,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <PayPalScriptProvider deferLoading={true}>
+        <RouterProvider router={router} />
+      </PayPalScriptProvider>
     </Provider>
   </React.StrictMode>
 );

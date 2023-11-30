@@ -27,6 +27,9 @@ const reservationSchema = mongoose.Schema(
     fromDate: { type: String, required: true },
     toDate: { type: String, required: true },
     numOfDays: { type: Number, required: true },
+    selectedRooms: {
+      type: Array,
+    },
     roomsPrice: {
       type: Number,
       required: true,

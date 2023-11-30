@@ -18,6 +18,10 @@ app.use("/api/rooms", roomRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/reservations", reservtionRoutes);
 
+app.get("/api/config/paypal", (req, res) =>
+  res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
+);
+
 app.use(notFound);
 app.use(errorHandler);
 
