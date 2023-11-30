@@ -9,7 +9,8 @@ const ConfirmScreen = () => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
-  const roomNumbers = cartItems[0].selectedRooms.join(" ");
+  const roomNumbers = cartItems[0].roomNumber;
+
   const checkoutHandler = () => {
     navigate("/login?redirect=/payment");
   };
@@ -42,7 +43,7 @@ const ConfirmScreen = () => {
                       <strong>From {item.fromDate}</strong> To{" "}
                       <strong>{item.toDate}</strong>
                     </Col>
-                    <Col> Room Numbers: {roomNumbers}</Col>
+                    <Col> Room Number: {roomNumbers}</Col>
                     <Col md={2}>${item.price} per night</Col>
                   </Row>
                 </ListGroup.Item>

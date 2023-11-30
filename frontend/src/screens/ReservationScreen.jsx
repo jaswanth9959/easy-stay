@@ -33,8 +33,6 @@ const ReservationScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const roomNums = reservation?.reservation?.selectedRooms?.join(" ");
-
   const [payReservation, { isLoading: loadingPay }] =
     usePayReservationMutation();
 
@@ -146,7 +144,13 @@ const ReservationScreen = () => {
                           <Col md={2}>
                             <Link to={`/rooms/${item.room}`}>{item.title}</Link>
                           </Col>
-                          <Col>RoomNumber: {roomNums}</Col>
+                          <Col>
+                            RoomNumber:{" "}
+                            {
+                              reservation?.reservation?.reservationItems[0]
+                                ?.roomNumber
+                            }
+                          </Col>
                           <Col md={4}>
                             From: {reservation.reservation.fromDate} to:{" "}
                             {reservation.reservation.toDate}

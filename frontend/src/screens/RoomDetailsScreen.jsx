@@ -85,9 +85,19 @@ const RoomDetailsScreen = () => {
 
   const handleClick = () => {
     const numOfDays = calcDays(dates[0].startDate, dates[0].endDate);
+    const roomNumber = room.roomNumbers.filter(
+      (room) => room._id === selectedRooms?.join(" ")
+    );
 
     dispatch(
-      addToCart({ ...room, selectedRooms, numOfDays, fromDate, toDate })
+      addToCart({
+        ...room,
+        selectedRooms,
+        numOfDays,
+        fromDate,
+        toDate,
+        roomNumber: roomNumber[0].number,
+      })
     );
     navigate("/confirm");
   };
@@ -198,7 +208,7 @@ const RoomDetailsScreen = () => {
                             <label>{roomNumber.number}</label>
                             <input
                               type="checkbox"
-                              value={roomNumber.number}
+                              value={roomNumber._id}
                               onChange={handleSelect}
                               disabled={!isAvailable(roomNumber)}
                             />

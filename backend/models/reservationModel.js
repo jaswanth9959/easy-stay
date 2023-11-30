@@ -17,6 +17,7 @@ const reservationSchema = mongoose.Schema(
         title: { type: String, required: true },
         image: { type: String, required: true },
         price: { type: Number, required: true },
+        roomNumber: { type: String, required: true },
         room: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,

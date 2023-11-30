@@ -2,6 +2,20 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import Reservation from "../models/reservationModel.js";
 import Payment from "../models/paymentModel.js";
 import User from "../models/userModel.js";
+import Room from "../models/roomModel.js";
+
+function getDatesInRange(startDate, endDate) {
+  const dateArray = [];
+  const currentDate = new Date(startDate);
+  const end = new Date(endDate);
+
+  while (currentDate <= end) {
+    dateArray.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dateArray.map((date) => date.toISOString());
+}
 
 const addReservationItems = asyncHandler(async (req, res) => {
   const { reservationItems, paymentMethod, roomsPrice, taxPrice, totalPrice } =
@@ -21,6 +35,7 @@ const addReservationItems = asyncHandler(async (req, res) => {
         image: reservationItems[0].image,
         price: reservationItems[0].price,
         selectedRooms: reservationItems[0].selectedRooms,
+        roomNumber: reservationItems[0].roomNumber,
       },
     ];
     const reservation = new Reservation({
@@ -109,6 +124,23 @@ const updateReservationToPaid = asyncHandler(async (req, res) => {
       email_address: req.body.payer?.email_address,
     };
     const updatedPayment = await payment.save();
+    const allDates = getDatesInRange(ress.fromDate, ress.toDate);
+    try {
+      await Room.updateOne(
+        { "roomNumbers._id": ress.selectedRooms[0] },
+        {
+          $push: {
+            "roomNumbers.$.unavailableDates": allDates,
+          },
+        }
+      );
+      res.status(200).json("Room status has been updated.");
+    } catch (error) {
+      res.status(404);
+      throw new Error(" not found");
+    }
+
+    const room = Room.findById(ress.reservationItems[0].room);
 
     const reservation = await Reservation.findById(req.params.id).populate(
       "paymentID",
