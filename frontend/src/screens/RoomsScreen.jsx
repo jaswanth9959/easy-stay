@@ -25,7 +25,7 @@ const RoomsScreen = () => {
           <Row className="mt-3">
             {rooms.map((room) => (
               <Col
-                md={{ span: 4, offset: 1 }}
+                md={{ span: 4, offfset: 2 }}
                 sm={12}
                 key={room._id}
                 className="my-3"

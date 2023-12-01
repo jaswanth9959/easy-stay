@@ -3,6 +3,7 @@ import Reservation from "../models/reservationModel.js";
 import Payment from "../models/paymentModel.js";
 import User from "../models/userModel.js";
 import Room from "../models/roomModel.js";
+import moment from "moment";
 
 function getDatesInRange(startDate, endDate) {
   const dateArray = [];
@@ -84,7 +85,11 @@ const updateReservationToCheckedIn = asyncHandler(async (req, res) => {
 
   if (reservation) {
     reservation.isCheckedIn = true;
-    reservation.checkedInAt = Date.now();
+    // reservation.checkedInAt = Date.now();
+    const currDate = Date.now();
+    reservation.checkedInAt = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/New_York",
+    }).format(currDate);
 
     const updatedreservation = await reservation.save();
 
@@ -100,7 +105,10 @@ const updateReservationToCheckedOut = asyncHandler(async (req, res) => {
 
   if (reservation) {
     reservation.isCheckedOut = true;
-    reservation.checkedOutAt = Date.now();
+    const currDate = Date.now();
+    reservation.checkedOutAt = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Chicago",
+    }).format(currDate);
 
     const updatedreservation = await reservation.save();
 
@@ -116,7 +124,10 @@ const updateReservationToPaid = asyncHandler(async (req, res) => {
   const payment = await Payment.findById(ress.paymentID);
   if (payment) {
     payment.isPaid = true;
-    payment.paidAt = Date.now();
+    const currDate = Date.now();
+    payment.paidAt = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Chicago",
+    }).format(currDate);
     payment.paymentResult = {
       id: req.body.id,
       status: req.body.status,

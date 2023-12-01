@@ -170,7 +170,14 @@ const ReservationScreen = () => {
                 {reservation.reservation.paymentID.paymentMethod}
               </p>
               {reservation.reservation.paymentID.isPaid ? (
-                <Message>Paid on {}</Message>
+                <Message>
+                  Paid on{" "}
+                  {reservation?.reservation?.paymentID?.paidAt.substring(0, 10)}{" "}
+                  {reservation?.reservation?.paymentID?.paidAt.substring(
+                    11,
+                    16
+                  )}{" "}
+                </Message>
               ) : (
                 <Message variant="danger">Not Paid</Message>
               )}

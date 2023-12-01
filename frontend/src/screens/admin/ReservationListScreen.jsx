@@ -25,7 +25,6 @@ const ReservationListScreen = () => {
               <th>USER</th>
               <th>DATE</th>
               <th>TOTAL</th>
-              <th>PAID</th>
               <th>CHECKEDIN</th>
               <th>CHECKEDOUT</th>
               <th>ACTIONS</th>
@@ -38,14 +37,7 @@ const ReservationListScreen = () => {
                 <td>{reservation.user && reservation.user.name}</td>
                 <td>{reservation.createdAt.substring(0, 10)}</td>
                 <td>${reservation.roomsPrice + reservation.taxPrice}</td>
-                {/* <td>
-                  {reservation.isPaid ? (
-                    reservation.paidAt.substring(0, 10)
-                  ) : (
-                    <FaTimes style={{ color: "red" }} />
-                  )}
-                </td> */}
-                <td></td>
+
                 <td>
                   {reservation.isCheckedIn ? (
                     reservation?.checkedInAt?.substring(0, 10)

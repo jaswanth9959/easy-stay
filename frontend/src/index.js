@@ -28,7 +28,10 @@ import CompleteReservationScreen from "./screens/CompleteReservationScreen";
 import ReservationScreen from "./screens/ReservationScreen";
 import MyReservationsScreen from "./screens/MyReservationsScreen";
 import ReservationListScreen from "./screens/admin/ReservationListScreen";
+import RoomsListScreen from "./screens/admin/RoomsListScreen";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import AddRoomScreen from "./screens/admin/AddRoomScreen";
+import EditRoomScreen from "./screens/admin/EditRoomScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -53,6 +56,9 @@ const router = createBrowserRouter(
         <Route path="/admin/userlist" element={<UserListScreen />} />
         <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
         <Route path="/admin/reservations" element={<ReservationListScreen />} />
+        <Route path="/admin/rooms" element={<RoomsListScreen />} />
+        <Route path="/admin/rooms/add" element={<AddRoomScreen />} />
+        <Route path="/admin/rooms/:id/edit" element={<EditRoomScreen />} />
       </Route>
     </Route>
   )

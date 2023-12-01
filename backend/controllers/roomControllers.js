@@ -19,19 +19,53 @@ const getRoomById = asyncHandler(async (req, res) => {
   }
 });
 
-const updateRoomAvailability = asyncHandler(async (req, res) => {
+const createRoom = asyncHandler(async (req, res) => {
+  const { title, image, price, category, description, roomNumbers } = req.body;
   try {
-    await Room.updateOne(
-      { "roomNumbers._id": req.params.id },
-      {
-        $push: {
-          "roomNumbers.$.unavailableDates": req.body.dates,
-        },
-      }
-    );
-    res.status(200).json("Room status has been updated.");
-  } catch (err) {
-    next(err);
+    const room = new Room({
+      title,
+      image,
+      user: "65666a047b2465de36288c8c",
+      price,
+      category,
+      description,
+      roomNumbers,
+    });
+    const createdRoom = await room.save();
+    res.status(201).json(createdRoom);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+const deleteRoom = asyncHandler(async (req, res) => {
+  const room = await Room.findById(req.params.id);
+
+  if (room) {
+    await Room.deleteOne({ _id: room._id });
+    res.json({ message: "Room is removed" });
+  } else {
+    res.status(404);
+    throw new Error("Room not found");
+  }
+});
+
+const updateRoom = asyncHandler(async (req, res) => {
+  const { title, image, price, category, description, roomNumbers } = req.body;
+  const room = await Room.findById(req.params.id);
+  if (room) {
+    room.title = title;
+    room.price = price;
+    room.description = description;
+    room.image = image;
+    room.category = category;
+    room.roomNumbers = roomNumbers;
+
+    const updatedRoom = await room.save();
+    res.json(updatedRoom);
+  } else {
+    res.status(404);
+    throw new Error("room not found");
   }
 });
 
@@ -73,4 +107,11 @@ const createRoomReview = asyncHandler(async (req, res) => {
   }
 });
 
-export { getRoomById, getRooms, updateRoomAvailability, createRoomReview };
+export {
+  getRoomById,
+  getRooms,
+  createRoomReview,
+  createRoom,
+  updateRoom,
+  deleteRoom,
+};
