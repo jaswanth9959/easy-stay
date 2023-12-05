@@ -85,11 +85,12 @@ const updateReservationToCheckedIn = asyncHandler(async (req, res) => {
 
   if (reservation) {
     reservation.isCheckedIn = true;
-    // reservation.checkedInAt = Date.now();
-    const currDate = Date.now();
-    reservation.checkedInAt = new Intl.DateTimeFormat("en-US", {
-      timeZone: "America/New_York",
-    }).format(currDate);
+    reservation.checkedInAt = Date.now();
+    reservation.status = "Checked-In";
+    // const currDate = Date.now();
+    // reservation.checkedInAt = new Intl.DateTimeFormat("en-US", {
+    //   timeZone: "America/New_York",
+    // }).format(currDate);
 
     const updatedreservation = await reservation.save();
 
@@ -105,11 +106,27 @@ const updateReservationToCheckedOut = asyncHandler(async (req, res) => {
 
   if (reservation) {
     reservation.isCheckedOut = true;
-    const currDate = Date.now();
-    reservation.checkedOutAt = new Intl.DateTimeFormat("en-US", {
-      timeZone: "America/Chicago",
-    }).format(currDate);
+    reservation.checkedOutAt = Date.now();
+    reservation.status = "Completed";
+    // const currDate = Date.now();
+    // reservation.checkedOutAt = new Intl.DateTimeFormat("en-US", {
+    //   timeZone: "America/Chicago",
+    // }).format(currDate);
 
+    const updatedreservation = await reservation.save();
+
+    res.json(updatedreservation);
+  } else {
+    res.status(404);
+    throw new Error("Reservation not found");
+  }
+});
+
+const updateReservationToCanceled = asyncHandler(async (req, res) => {
+  const reservation = await Reservation.findById(req.params.id);
+
+  if (reservation) {
+    reservation.status = "Canceled";
     const updatedreservation = await reservation.save();
 
     res.json(updatedreservation);
@@ -124,10 +141,11 @@ const updateReservationToPaid = asyncHandler(async (req, res) => {
   const payment = await Payment.findById(ress.paymentID);
   if (payment) {
     payment.isPaid = true;
-    const currDate = Date.now();
-    payment.paidAt = new Intl.DateTimeFormat("en-US", {
-      timeZone: "America/Chicago",
-    }).format(currDate);
+    // const currDate = Date.now();
+    // payment.paidAt = new Intl.DateTimeFormat("en-US", {
+    //   timeZone: "America/Chicago",
+    // }).format(currDate);
+    payment.paidAt = Date.now();
     payment.paymentResult = {
       id: req.body.id,
       status: req.body.status,
@@ -179,4 +197,5 @@ export {
   updateReservationToPaid,
   updateReservationToCheckedIn,
   updateReservationToCheckedOut,
+  updateReservationToCanceled,
 };

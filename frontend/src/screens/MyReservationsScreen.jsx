@@ -23,11 +23,13 @@ const MyReservationsScreen = () => {
             <Table hover responsive bordered className="table-sm">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>DATE</th>
+                  <th>RESERVATION ID</th>
+                  <th>CREATED DATE</th>
+                  <th>ROOM</th>
                   <th>TOTAL</th>
                   <th>Checked-In</th>
                   <th>Checked-Out</th>
+                  <th>STATUS</th>
                   <th>ACTION</th>
                 </tr>
               </thead>
@@ -36,6 +38,7 @@ const MyReservationsScreen = () => {
                   <tr key={reservation._id}>
                     <td>{reservation._id}</td>
                     <td>{reservation.createdAt.substring(0, 10)}</td>
+                    <td>{reservation.reservationItems[0].title}</td>
                     <td>${reservation.roomsPrice + reservation.taxPrice}</td>
 
                     <td>
@@ -52,6 +55,41 @@ const MyReservationsScreen = () => {
                         <FaTimes style={{ color: "red" }} />
                       )}
                     </td>
+                    <td>
+                      {reservation?.status === "Completed" && (
+                        <Button
+                          className="btn-sm bg-success text-light"
+                          variant="light"
+                        >
+                          Completed
+                        </Button>
+                      )}
+                      {reservation?.status === "Checked-In" && (
+                        <Button
+                          className="btn-sm bg-info text-light"
+                          variant="light"
+                        >
+                          Checked-In
+                        </Button>
+                      )}
+                      {reservation?.status === "Canceled" && (
+                        <Button
+                          className="btn-sm bg-danger text-light"
+                          variant="light"
+                        >
+                          Canceled
+                        </Button>
+                      )}
+                      {reservation?.status === "Pending" && (
+                        <Button
+                          className="btn-sm bg-warning text-light"
+                          variant="light"
+                        >
+                          Pending
+                        </Button>
+                      )}
+                    </td>
+
                     <td>
                       <LinkContainer to={`/reservation/${reservation._id}`}>
                         <Button

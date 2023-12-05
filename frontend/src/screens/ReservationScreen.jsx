@@ -20,6 +20,7 @@ import {
   useCheckOutReservationMutation,
   usePayReservationMutation,
   useGetPaypalClientIdQuery,
+  useCancelReservationMutation,
 } from "../slices/reservationsApiSlice";
 const ReservationScreen = () => {
   const { id } = useParams();
@@ -74,8 +75,8 @@ const ReservationScreen = () => {
     return actions.order.capture().then(async function (details) {
       try {
         await payReservation({ id, details });
-        refetch();
         toast.success("Reservation is paid");
+        refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
@@ -105,6 +106,8 @@ const ReservationScreen = () => {
   const [checkedOut, { isLoading: loadingCheckedOut }] =
     useCheckOutReservationMutation();
 
+  const [cancelReservation] = useCancelReservationMutation();
+
   const checkInHandler = async () => {
     await checkedIn(id);
     refetch();
@@ -113,12 +116,27 @@ const ReservationScreen = () => {
     await checkedOut(id);
     refetch();
   };
+  const cancleHandler = async () => {
+    await cancelReservation(id);
+    refetch();
+    toast.success("Your Request is sent to Admin. Refund will be initiated");
+  };
   return isLoading ? (
     <Loader />
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
     <Container>
+      {userInfo.isAdmin ? (
+        <Link className="btn btn-light my-3" to="/admin/reservations">
+          Go Back
+        </Link>
+      ) : (
+        <Link className="btn btn-light my-3" to="/myreservations">
+          Go Back
+        </Link>
+      )}
+
       <h1> Reservation ID: {reservation?.reservation._id}</h1>
       <Row>
         <Col md={8}>
@@ -173,10 +191,10 @@ const ReservationScreen = () => {
                 <Message>
                   Paid on{" "}
                   {reservation?.reservation?.paymentID?.paidAt.substring(0, 10)}{" "}
-                  {reservation?.reservation?.paymentID?.paidAt.substring(
+                  {/* {reservation?.reservation?.paymentID?.paidAt.substring(
                     11,
                     16
-                  )}{" "}
+                  )}{" "} */}
                 </Message>
               ) : (
                 <Message variant="danger">Not Paid</Message>
@@ -192,13 +210,13 @@ const ReservationScreen = () => {
                 <strong>Email: </strong> {reservation.user.email}
               </p>
               <p>
-                <strong>Status: </strong>
+                <strong> Status: </strong>
               </p>
               {reservation.reservation.isCheckedIn ? (
                 <Message>
                   Checked-IN on{" "}
                   {reservation?.reservation?.checkedInAt?.substring(0, 10)}{" "}
-                  {reservation?.reservation?.checkedInAt?.substring(11, 16)}
+                  {/* {reservation?.reservation?.checkedInAt?.substring(11, 16)} */}
                 </Message>
               ) : (
                 <Message variant="danger">Not Checked-IN</Message>
@@ -207,10 +225,19 @@ const ReservationScreen = () => {
                 <Message>
                   Checked-Out on{" "}
                   {reservation?.reservation?.checkedOutAt?.substring(0, 10)}{" "}
-                  {reservation?.reservation?.checkedOutAt?.substring(11, 16)}
+                  {/* {reservation?.reservation?.checkedOutAt?.substring(11, 16)} */}
                 </Message>
               ) : (
                 <Message variant="danger">Not Checked-Out</Message>
+              )}
+              {reservation.reservation?.status === "Completed" && (
+                <Message variant="success">Completed</Message>
+              )}
+              {reservation.reservation?.status === "Canceled" && (
+                <Message variant="danger">Canceled</Message>
+              )}
+              {reservation.reservation?.status === "Pending" && (
+                <Message variant="warning">Pending</Message>
               )}
             </ListGroup.Item>
           </ListGroup>
@@ -247,6 +274,11 @@ const ReservationScreen = () => {
                   <Col>${reservation.reservation.paymentID.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
+              {reservation?.reservation?.status === "Pending" && (
+                <Button style={{ margin: "10px" }} onClick={cancleHandler}>
+                  Cancel Reservation
+                </Button>
+              )}
 
               {!reservation?.reservation?.paymentID?.isPaid && (
                 <ListGroup.Item>
@@ -256,12 +288,14 @@ const ReservationScreen = () => {
                     <Loader />
                   ) : (
                     <div>
-                      <Button
-                        style={{ marginBottom: "10px" }}
-                        onClick={onApproveTest}
-                      >
-                        Test Pay Order
-                      </Button>
+                      {reservation?.user?.isAdmin && (
+                        <Button
+                          style={{ margin: "10px" }}
+                          onClick={onApproveTest}
+                        >
+                          Mark As Paid
+                        </Button>
+                      )}
 
                       <div>
                         {userInfo._id === reservation?.user?._id && (
@@ -276,6 +310,17 @@ const ReservationScreen = () => {
                   )}
                 </ListGroup.Item>
               )}
+              {/* {!reservation?.reservation?.paymentID?.isPaid &&
+              reservation?.reservation?.status === "pending" ? (
+                <ListGroup.Item>
+                  <Button
+                    style={{ marginBottom: "10px" }}
+                    onClick={cancleHandler}
+                  >
+                    Cancel Reservation
+                  </Button>
+                </ListGroup.Item>
+              ) : null} */}
 
               {loadingCheckedIn && <Loader />}
 

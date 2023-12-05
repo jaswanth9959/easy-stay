@@ -8,6 +8,7 @@ import {
   updateReservationToPaid,
   updateReservationToCheckedIn,
   updateReservationToCheckedOut,
+  updateReservationToCanceled,
 } from "../controllers/reservationControllers.js";
 
 import { protect, admin } from "../middleware/authMiddleware.js";
@@ -17,6 +18,7 @@ router
   .get(protect, admin, getReservations);
 router.route("/mine").get(protect, getMyReservations);
 router.route("/:id/pay").put(protect, updateReservationToPaid);
+router.route("/:id/cancel").put(protect, updateReservationToCanceled);
 router.route("/:id").get(protect, getReservationById);
 router
   .route("/:id/checkedIn")

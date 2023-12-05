@@ -84,14 +84,14 @@ const UserEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group className="my-2" controlId="isadmin">
+            {/* <Form.Group className="my-2" controlId="isadmin">
               <Form.Check
                 type="checkbox"
                 label="Is Admin"
                 checked={isAdmin}
                 onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
-            </Form.Group>
+            </Form.Group> */}
 
             <Button type="submit" variant="primary" className="btn-bg">
               Update

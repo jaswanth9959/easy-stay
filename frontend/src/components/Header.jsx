@@ -39,6 +39,11 @@ const Header = () => {
             <Nav className="ms-auto">
               {userInfo ? (
                 <>
+                  {userInfo && userInfo.isAdmin && (
+                    <LinkContainer to="/rooms">
+                      <Nav.Link>Rooms</Nav.Link>
+                    </LinkContainer>
+                  )}
                   <NavDropdown title={userInfo.name} id="username">
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>Profile</NavDropdown.Item>
@@ -61,20 +66,22 @@ const Header = () => {
 
               {/* Admin Links */}
               {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="Dashboard" id="adminmenu">
-                  <LinkContainer to="/admin/countercheckin">
+                <>
+                  <NavDropdown title="Dashboard" id="adminmenu">
+                    {/* <LinkContainer to="/admin/countercheckin">
                     <NavDropdown.Item>Manage Counter-CheckIn</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/rooms">
-                    <NavDropdown.Item>Manage Rooms</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/reservations">
-                    <NavDropdown.Item>Manage Reservationss</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/userlist">
-                    <NavDropdown.Item>Manage Customers</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
+                  </LinkContainer> */}
+                    <LinkContainer to="/admin/rooms">
+                      <NavDropdown.Item>Manage Rooms</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/admin/reservations">
+                      <NavDropdown.Item>Manage Reservationss</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/admin/userlist">
+                      <NavDropdown.Item>Manage Customers</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
+                </>
               )}
             </Nav>
           </Navbar.Collapse>

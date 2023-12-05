@@ -49,6 +49,11 @@ const reservationSchema = mongoose.Schema(
     checkedInAt: {
       type: Date,
     },
+    status: {
+      type: String,
+      required: true,
+      default: "Pending",
+    },
     isCheckedOut: {
       type: Boolean,
       required: true,

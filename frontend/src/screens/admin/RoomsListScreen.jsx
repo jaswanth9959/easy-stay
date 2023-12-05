@@ -46,7 +46,7 @@ const RoomsListScreen = () => {
           <Table bordered hover responsive className="table-sm">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>ROOM ID</th>
                 <th>Title</th>
                 <th>IMAGE</th>
                 <th>PRICE</th>

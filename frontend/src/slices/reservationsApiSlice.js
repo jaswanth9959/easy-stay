@@ -36,6 +36,12 @@ export const reservationApiSlice = apiSlice.injectEndpoints({
         body: details,
       }),
     }),
+    cancelReservation: builder.mutation({
+      query: (id) => ({
+        url: `${RESERVATIONS_URL}/${id}/cancel`,
+        method: "PUT",
+      }),
+    }),
     getPaypalClientId: builder.query({
       query: () => ({
         url: PAYPAL_URL,
@@ -65,5 +71,6 @@ export const {
   useGetReservationsQuery,
   useCheckOutReservationMutation,
   useGetPaypalClientIdQuery,
+  useCancelReservationMutation,
   usePayReservationMutation,
 } = reservationApiSlice;

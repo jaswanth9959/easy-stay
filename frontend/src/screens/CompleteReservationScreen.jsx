@@ -50,21 +50,7 @@ const CompleteReservationScreen = () => {
           <Col md={8}>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h2>Customer Details</h2>
-                <p>
-                  <strong>Name: </strong> {userInfo.name}
-                </p>
-                <p>
-                  <strong>Email: </strong> {userInfo.email}
-                </p>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <h2>Payment Method</h2>
-                <strong>Method: </strong>
-                {cart.paymentMethod}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <h2>Reservation Details</h2>
+                <h2>Room Details</h2>
                 {cart.cartItems.length === 0 ? (
                   <Message>No reservation items!</Message>
                 ) : (
@@ -101,6 +87,20 @@ const CompleteReservationScreen = () => {
                     ))}
                   </ListGroup>
                 )}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <h2>Customer Details</h2>
+                <p>
+                  <strong>Name: </strong> {userInfo.name}
+                </p>
+                <p>
+                  <strong>Email: </strong> {userInfo.email}
+                </p>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <h2>Payment Method</h2>
+                <strong>Method: </strong>
+                {cart.paymentMethod}
               </ListGroup.Item>
             </ListGroup>
           </Col>

@@ -21,12 +21,14 @@ const ReservationListScreen = () => {
         <Table bordered hover responsive className="table-sm">
           <thead>
             <tr>
-              <th>ID</th>
+              <th>RESERVATION ID</th>
               <th>USER</th>
-              <th>DATE</th>
+              <th>CREATED DATE</th>
+              <th>ROOM</th>
               <th>TOTAL</th>
               <th>CHECKEDIN</th>
               <th>CHECKEDOUT</th>
+              <th>STATUS</th>
               <th>ACTIONS</th>
             </tr>
           </thead>
@@ -36,6 +38,7 @@ const ReservationListScreen = () => {
                 <td>{reservation._id}</td>
                 <td>{reservation.user && reservation.user.name}</td>
                 <td>{reservation.createdAt.substring(0, 10)}</td>
+                <td>{reservation.reservationItems[0].title}</td>
                 <td>${reservation.roomsPrice + reservation.taxPrice}</td>
 
                 <td>
@@ -50,6 +53,40 @@ const ReservationListScreen = () => {
                     reservation?.checkedOutAt?.substring(0, 10)
                   ) : (
                     <FaTimes style={{ color: "red" }} />
+                  )}
+                </td>
+                <td>
+                  {reservation?.status === "Completed" && (
+                    <Button
+                      className="btn-sm bg-success text-light"
+                      variant="light"
+                    >
+                      Completed
+                    </Button>
+                  )}
+                  {reservation?.status === "Checked-In" && (
+                    <Button
+                      className="btn-sm bg-info text-light"
+                      variant="light"
+                    >
+                      Checked-In
+                    </Button>
+                  )}
+                  {reservation?.status === "Canceled" && (
+                    <Button
+                      className="btn-sm bg-danger text-light"
+                      variant="light"
+                    >
+                      Canceled
+                    </Button>
+                  )}
+                  {reservation?.status === "Pending" && (
+                    <Button
+                      className="btn-sm bg-warning text-light"
+                      variant="light"
+                    >
+                      Pending
+                    </Button>
                   )}
                 </td>
                 <td>
