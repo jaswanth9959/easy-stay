@@ -36,7 +36,7 @@ const ReservationListScreen = () => {
             {reservations.map((reservation) => (
               <tr key={reservation._id}>
                 <td>{reservation._id}</td>
-                <td>{reservation.user && reservation.user.name}</td>
+                <td>{reservation.user && reservation.user.firstname}</td>
                 <td>{reservation.createdAt.substring(0, 10)}</td>
                 <td>{reservation.reservationItems[0].title}</td>
                 <td>${reservation.roomsPrice + reservation.taxPrice}</td>

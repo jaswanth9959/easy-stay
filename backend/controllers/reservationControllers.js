@@ -3,7 +3,6 @@ import Reservation from "../models/reservationModel.js";
 import Payment from "../models/paymentModel.js";
 import User from "../models/userModel.js";
 import Room from "../models/roomModel.js";
-import moment from "moment";
 
 function getDatesInRange(startDate, endDate) {
   const dateArray = [];
@@ -126,6 +125,22 @@ const updateReservationToCanceled = asyncHandler(async (req, res) => {
   const reservation = await Reservation.findById(req.params.id);
 
   if (reservation) {
+    const allDates = getDatesInRange(reservation.fromDate, reservation.toDate);
+    // console.log(allDates);
+    try {
+      await Room.updateOne(
+        { "roomNumbers._id": reservation.selectedRooms[0] },
+        {
+          $pull: {
+            "roomNumbers.$.unavailableDates": allDates,
+          },
+        }
+      );
+      res.status(200).json("Room status has been updated.");
+    } catch (error) {
+      res.status(404);
+      throw new Error(" not found");
+    }
     reservation.status = "Canceled";
     const updatedreservation = await reservation.save();
 

@@ -8,8 +8,10 @@ import { useProfileMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 
 const ProfileScreen = () => {
-  const [name, setName] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -19,9 +21,11 @@ const ProfileScreen = () => {
     useProfileMutation();
 
   useEffect(() => {
-    setName(userInfo.name);
+    setFirstname(userInfo.firstname);
+    setLastname(userInfo.lastname);
     setEmail(userInfo.email);
-  }, [userInfo.email, userInfo.name]);
+    setPhone(userInfo.phone);
+  }, [userInfo.email, userInfo.lastname, userInfo.firstname, userInfo.phone]);
 
   const dispatch = useDispatch();
   const submitHandler = async (e) => {
@@ -32,8 +36,10 @@ const ProfileScreen = () => {
       try {
         const res = await updateProfile({
           _id: userInfo._id,
-          name,
+          firstname,
+          lastname,
           email,
+          phone,
           password,
         }).unwrap();
         dispatch(setCredentials({ ...res }));
@@ -53,16 +59,24 @@ const ProfileScreen = () => {
           <h2>Update Profile</h2>
 
           <Form onSubmit={submitHandler}>
-            <Form.Group className="my-2" controlId="name">
-              <Form.Label>Name</Form.Label>
+            <Form.Group className="my-2" controlId="firstname">
+              <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="name"
-                placeholder="Enter name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter First name"
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
               ></Form.Control>
             </Form.Group>
-
+            <Form.Group className="my-2" controlId="lastname">
+              <Form.Label>last Name</Form.Label>
+              <Form.Control
+                type="name"
+                placeholder="Enter Last name"
+                value={lastname}
+                onChange={(e) => setLastname(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
             <Form.Group className="my-2" controlId="email">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
@@ -70,6 +84,15 @@ const ProfileScreen = () => {
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group className="my-2" controlId="phone">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                type="name"
+                placeholder="Enter Phone Number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               ></Form.Control>
             </Form.Group>
 

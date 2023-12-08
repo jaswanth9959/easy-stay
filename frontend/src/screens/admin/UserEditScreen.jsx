@@ -13,7 +13,9 @@ import {
 
 const UserEditScreen = () => {
   const { id: userId } = useParams();
-  const [name, setName] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -31,7 +33,7 @@ const UserEditScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await updateUser({ userId, name, email, isAdmin });
+      await updateUser({ userId, firstname, lastname, email, phone, isAdmin });
       toast.success("user updated successfully");
       refetch();
       navigate("/admin/userlist");
@@ -42,7 +44,9 @@ const UserEditScreen = () => {
 
   useEffect(() => {
     if (user) {
-      setName(user.name);
+      setFirstname(user.firstname);
+      setLastname(user.lastname);
+      setPhone(user.phone);
       setEmail(user.email);
       setIsAdmin(user.isAdmin);
     }
@@ -64,13 +68,22 @@ const UserEditScreen = () => {
           </Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group className="my-2" controlId="name">
-              <Form.Label>Name</Form.Label>
+            <Form.Group className="my-2" controlId="firstname">
+              <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="name"
-                placeholder="Enter name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter First name"
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group className="my-2" controlId="lastname">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="name"
+                placeholder="Enter Last name"
+                value={lastname}
+                onChange={(e) => setLastname(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
@@ -81,6 +94,15 @@ const UserEditScreen = () => {
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group className="my-2" controlId="phone">
+              <Form.Label>Phone</Form.Label>
+              <Form.Control
+                type="name"
+                placeholder="Enter Phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               ></Form.Control>
             </Form.Group>
 

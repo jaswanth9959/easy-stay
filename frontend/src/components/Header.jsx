@@ -44,7 +44,7 @@ const Header = () => {
                       <Nav.Link>Rooms</Nav.Link>
                     </LinkContainer>
                   )}
-                  <NavDropdown title={userInfo.name} id="username">
+                  <NavDropdown title={userInfo.firstname} id="username">
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>Profile</NavDropdown.Item>
                     </LinkContainer>

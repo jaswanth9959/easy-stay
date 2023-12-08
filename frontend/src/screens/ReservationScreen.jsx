@@ -203,7 +203,7 @@ const ReservationScreen = () => {
             <ListGroup.Item>
               <h2>Customer Details </h2>
               <p>
-                <strong>Name: </strong> {reservation.user.name}
+                <strong>Name: </strong> {reservation.user.firstname}
               </p>
 
               <p>
@@ -326,7 +326,7 @@ const ReservationScreen = () => {
 
               {userInfo &&
                 userInfo.isAdmin &&
-                // order.isPaid &&
+                reservation.reservation.status !== "Canceled" &&
                 !reservation.reservation.isCheckedIn && (
                   <ListGroup.Item>
                     <Button
@@ -342,7 +342,7 @@ const ReservationScreen = () => {
 
               {userInfo &&
                 userInfo.isAdmin &&
-                // order.isPaid &&
+                reservation.reservation.status !== "Canceled" &&
                 !reservation.reservation.isCheckedOut && (
                   <ListGroup.Item>
                     <Button

@@ -10,8 +10,10 @@ import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 
 const RegisterScreen = () => {
-  const [name, setName] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -39,7 +41,13 @@ const RegisterScreen = () => {
       toast.error("Passwords do not match");
     } else {
       try {
-        const res = await register({ name, email, password }).unwrap();
+        const res = await register({
+          firstname,
+          lastname,
+          email,
+          phone,
+          password,
+        }).unwrap();
         dispatch(setCredentials({ ...res }));
         navigate(redirect);
       } catch (err) {
@@ -51,15 +59,24 @@ const RegisterScreen = () => {
   return (
     <Container className="py-4">
       <FormContainer>
-        <h1>Register</h1>
+        <h1>Customer Register</h1>
         <Form onSubmit={submitHandler}>
-          <Form.Group className="my-2" controlId="name">
-            <Form.Label>Name</Form.Label>
+          <Form.Group className="my-2" controlId="firstname">
+            <Form.Label>First Name</Form.Label>
             <Form.Control
               type="name"
-              placeholder="Enter name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter First Name"
+              value={firstname}
+              onChange={(e) => setFirstname(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group className="my-2" controlId="lastname">
+            <Form.Label>Last Name</Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Enter Last Name"
+              value={lastname}
+              onChange={(e) => setLastname(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -70,6 +87,15 @@ const RegisterScreen = () => {
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group className="my-2" controlId="phone">
+            <Form.Label>Phone Number</Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Enter Phone Number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
